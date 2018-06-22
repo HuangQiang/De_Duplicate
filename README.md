@@ -1,8 +1,10 @@
 # De_Duplicate: De-Duplicate Datasets for the Same Objects
 
-Version: 1.0.0
+Version: 1.1.0
 
 Release date:  02-05-2018
+
+Last Modified: 22-06-2018
 
 
 Introduction
@@ -11,7 +13,8 @@ Introduction
 This package is written in the C++ programming language. It is used to 
 de-duplicate the datasets where there are multiple exactly same data 
 objects in it. Here we implement perfect hashing (a two-level universal
-hashing) for de-duplication.
+hashing) for de-duplication. Now this package suppport two types of data:
+integer and real values
 
 
 Usage
@@ -23,7 +26,7 @@ please ensure the input format of the dataset is correct. We give a sample
 dataset (i.e., Mnist) for your reference.
 
 
-Authors
+Author
 --------
 
 * **Qiang Huang**
