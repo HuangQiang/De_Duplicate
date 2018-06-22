@@ -1,4 +1,4 @@
-# De_Duplicate: De-Duplicate Datasets for the Same Objects
+# De_Duplicate: De-Duplicate the Same Objects in Datasets
 
 Version: 1.1.0
 
