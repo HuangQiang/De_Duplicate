@@ -4,6 +4,7 @@
 void de_duplicate(					// de-duplicate data objects
 	int    n,							// cardinality
 	int    d,							// dimensionality
+	int    type,						// data type (int or float)
 	string data_set,					// address of data set
 	string output_path)					// output path with data name
 {
@@ -16,7 +17,7 @@ void de_duplicate(					// de-duplicate data objects
 	int min = MAXINT;
 	int max = MININT;
 	vector<vector<int> > data(n, vector<int>(d, 0));
-	if (read_data(n, d, data_set, min, max, data)) {
+	if (read_data(n, d, type, data_set, min, max, data)) {
 		printf("Reading Dataset Error!\n");
 		exit(1);
 	}
@@ -42,7 +43,7 @@ void de_duplicate(					// de-duplicate data objects
 	//  step 3: write de-duplicated results to disk
 	// -------------------------------------------------------------------------
 	gettimeofday(&start_time, NULL);
-	write_results(min, max, data, distinct_id, output_path);
+	write_results(min, max, type, data, distinct_id, output_path);
 
 	gettimeofday(&end_time, NULL);
 	float io_time = end_time.tv_sec - start_time.tv_sec + 
@@ -54,10 +55,13 @@ void de_duplicate(					// de-duplicate data objects
 void write_results(					// write de-duplicated results to disk
 	int    min, 						// min value of data objects
 	int    max, 						// max value of data objects
+	int    type,						// data type (int or float)
 	const  vector<vector<int> > &data, 	// data objects
 	const  vector<int> &distinct_id, 	// distinct data objects id
 	string output_path)					// output path with data name
 {
+	assert(type == 0 || type == 1);
+
 	FILE *fp = NULL;
 	int N = (int) data.size();
 	int n = (int) distinct_id.size();
@@ -65,8 +69,14 @@ void write_results(					// write de-duplicated results to disk
 
 	printf("n   = %d\n", n);
 	printf("d   = %d\n", d);
-	printf("min = %d\n", min);
-	printf("max = %d\n", max);
+	if (type == 0) {
+		printf("min = %d\n", min);
+		printf("max = %d\n", max);
+	}
+	else {
+		printf("min = %f\n", (float) min / SCALE);
+		printf("max = %f\n", (float) max / SCALE);
+	}
 	printf("\n");
 	
 	// -------------------------------------------------------------------------
@@ -81,8 +91,14 @@ void write_results(					// write de-duplicated results to disk
 	
 	fprintf(fp, "n   = %d\n", n);
 	fprintf(fp, "d   = %d\n", d);
-	fprintf(fp, "min = %d\n", min);
-	fprintf(fp, "max = %d\n", max);
+	if (type == 0) {
+		fprintf(fp, "min = %d\n", min);
+		fprintf(fp, "max = %d\n", max);
+	}
+	else {
+		fprintf(fp, "min = %f\n", (float) min / SCALE);
+		fprintf(fp, "max = %f\n", (float) max / SCALE);
+	}
 	fclose(fp);
 
 	// -------------------------------------------------------------------------
@@ -106,7 +122,7 @@ void write_results(					// write de-duplicated results to disk
 	// -------------------------------------------------------------------------
 	//  write new data set to disk
 	// -------------------------------------------------------------------------
-	string data_fname = output_path + ".data";
+	string data_fname = output_path + ".ds";
 	fp = fopen(data_fname.c_str(), "w");
 	if (!fp) {
 		printf("Could not open %s\n", data_fname.c_str());
@@ -117,8 +133,15 @@ void write_results(					// write de-duplicated results to disk
 		int id = distinct_id[i];
 	
 		fprintf(fp, "%d", i + 1);
-		for (int j = 0; j < d; ++j) {
-			fprintf(fp, " %d", data[id][j]);
+		if (type == 0) {
+			for (int j = 0; j < d; ++j) {
+				fprintf(fp, " %d", data[id][j]);
+			}
+		}
+		else {
+			for (int j = 0; j < d; ++j) {
+				fprintf(fp, " %f", (float) data[id][j] / SCALE);
+			}
 		}
 		fprintf(fp, "\n");
 	}

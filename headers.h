@@ -14,6 +14,11 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+
+#include <unistd.h>
+#include <stdarg.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <sys/time.h>
 
 #include "def.h"

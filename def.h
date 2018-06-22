@@ -28,22 +28,21 @@ typedef unordered_map<int, vector<int> > umap;
 // -----------------------------------------------------------------------------
 //  constants
 // -----------------------------------------------------------------------------
-const float MAXREAL  = 3.402823466e+38F;
-const float MINREAL  = -MAXREAL;
-const int   MAXINT   = 2147483647;
-const int   MININT   = -MAXINT;
+const float MAXREAL    = 3.402823466e+38F;
+const float MINREAL    = -MAXREAL;
+const int   MAXINT     = 2147483647;
+const int   MININT     = -MAXINT;
 
-const int SIZEBOOL   = (int) sizeof(bool);
-const int SIZEINT    = (int) sizeof(int);
-const int SIZECHAR   = (int) sizeof(char);
-const int SIZEFLOAT  = (int) sizeof(float);
-const int SIZEDOUBLE = (int) sizeof(double);
+const int   SIZEBOOL   = (int) sizeof(bool);
+const int   SIZEINT    = (int) sizeof(int);
+const int   SIZECHAR   = (int) sizeof(char);
+const int   SIZEFLOAT  = (int) sizeof(float);
+const int   SIZEDOUBLE = (int) sizeof(double);
 
-const u32 PRIME = 4294967291U;      // PRIME = 2^32 - 5
-
-const float E  = 2.7182818F;
-const float PI = 3.141592654F;
-const float FLOATZERO = 1e-6F;
-const float ANGLE = PI / 8.0f;
+const int   SCALE      = 1000000;
+const u32   PRIME      = 4294967291U; // PRIME = 2^32 - 5
+const float E          = 2.7182818F;
+const float PI         = 3.141592654F;
+const float FLOATZERO  = 1e-6F;
 
 #endif // __DEF_H

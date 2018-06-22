@@ -1,13 +1,42 @@
 #include "headers.h"
 
+// -------------------------------------------------------------------------
+int create_dir(						// create directory
+	char *path)							// input path
+{
+	// ---------------------------------------------------------------------
+	//  check whether the directory exists. if the directory does not 
+	//  exist, we create the directory for each folder)
+	// ---------------------------------------------------------------------
+	int len = (int)strlen(path);
+	for (int i = 0; i < len; ++i) {
+		if (path[i] == '/') {
+			char ch = path[i + 1];
+			path[i + 1] = '\0';
+
+			int ret = access(path, F_OK);
+			if (ret != 0) {
+				ret = mkdir(path, 0755);
+				if (ret != 0) {
+					printf("Could not create directory %s\n", path);
+					return 1;
+				}
+			}
+			path[i + 1] = ch;
+		}
+	}
+	return 0;
+}
+
 // -----------------------------------------------------------------------------
 int read_data(						// read data set from disk
 	int    n,							// cardinality
 	int    d,							// dimensionality
+	int    type,						// data type (int or float)
 	string fname,						// file name of data set
 	int    &min,						// min value of data set
 	int    &max,						// max value of data set
-	vector<vector<int> > &data)			// data objects (return)
+	vector<vector<int> > &data) 		// data objects (return)
 {
 	FILE *fp = fopen(fname.c_str(), "r");
 	if (!fp) {
@@ -18,16 +47,30 @@ int read_data(						// read data set from disk
 	min = MAXINT;
 	max = MININT;
 
-	int i   = 0;
+	int i = 0;
 	int tmp = -1;
 	while (!feof(fp) && i < n) {
 		fscanf(fp, "%d", &tmp);
-		for (int j = 0; j < d; ++j) {
-			fscanf(fp, " %d", &tmp);
-			data[i][j] = tmp;
 
-			if (tmp < min) min = tmp;
-			if (tmp > max) max = tmp;
+		if (type == 0) {
+			for (int j = 0; j < d; ++j) {
+				fscanf(fp, " %d", &tmp);
+				data[i][j] = tmp;
+
+				if (tmp < min) min = tmp;
+				if (tmp > max) max = tmp;
+			}
+		}
+		else {
+			for (int j = 0; j < d; ++j) {
+				float val = -1.0f;
+				fscanf(fp, " %f", &val);
+				tmp = (int) (val * SCALE);
+				data[i][j] = tmp;
+
+				if (tmp < min) min = tmp;
+				if (tmp > max) max = tmp;
+			}
 		}
 		fscanf(fp, "\n");
 		++i;

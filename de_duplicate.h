@@ -7,6 +7,7 @@ struct Pair;
 void de_duplicate(					// de-duplicate data objects
 	int    n,							// cardinality
 	int    d,							// dimensionality
+	int    type,						// data type (int or float)
 	string data_set,					// address of data set
 	string output_path);				// output path with data name
 
@@ -14,7 +15,8 @@ void de_duplicate(					// de-duplicate data objects
 void write_results(					// write de-duplicated results to disk
 	int    min, 						// min value of data objects
 	int    max, 						// max value of data objects
-	const  vector<vector<int> > &data, 	// data objects
+	int    type,						// data type (int or float)
+	const  vector<vector<int> > &data,	// data objects
 	const  vector<int> &distinct_id, 	// distinct data objects id
 	string output_path);				// output path with data name
 	

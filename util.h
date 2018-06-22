@@ -4,10 +4,15 @@
 #include <vector>
 using namespace std;
 
+// -------------------------------------------------------------------------
+int create_dir(						// create directory
+	char *path);						// input path
+
 // -----------------------------------------------------------------------------
 int read_data(						// read data set from disk
 	int    n,							// cardinality
 	int    d,							// dimensionality
+	int    type,						// data type (int or float)
 	string fname,						// file name of data set
 	int    &min,						// min value of data set
 	int    &max,						// max value of data set
