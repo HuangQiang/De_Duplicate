@@ -1,41 +1,25 @@
 # De_Duplicate: De-Duplicate the Same Objects in Datasets
 
-Version: 1.1.0
+## Introduction
 
-Release date:  02-05-2018
+This package provides an algorithm ```de_duplicate``` to deduplicate the datasets where there are multiple exactly same data objects in it. Here we implement perfect hashing (a two-level universal hashing) for de-duplication. Now this package suppports two types of data: integer and real values.
 
-Last Modified: 22-06-2018
+## Compilation
 
+The package requires at least ```g++ with c++11``` support. To download and compile the code, type:
 
-Introduction
---------
+```bash
+$ git clone https://github.com/HuangQiang/De_Duplicate.git
+$ cd De_Duplicate
+$ g++ -std=c++11 -w -O3 -o dedup de_duplicate.cc 
+```
 
-This package is written in the C++ programming language. It is used to 
-de-duplicate the datasets where there are multiple exactly same data 
-objects in it. Here we implement perfect hashing (a two-level universal
-hashing) for de-duplication. Now this package suppport two types of data:
-integer and real values
+## Run Example
 
+We provide a script ```run.sh``` to deduplicate datasets. A quick example of ```OptDigits.data``` is shown as follows:
 
-Usage
---------
+```bash
+./dedup 3823 64 OptDigits.data OptDigits
+```
 
-We provide a Makefile and a shell script (i.e., run.sh) as a running 
-example for comipling and running the package. Before running this package, 
-please ensure the input format of the dataset is correct. We give a sample 
-dataset (i.e., Mnist) for your reference.
-
-
-Author
---------
-
-* **Qiang Huang**
-
-  Smart Systems Institute, National University of Singapore (NUS),
-  
-  Singapore, 119613 
-  
-  huangq2011@gmail.com, huangq25@mail2.sysu.edu.cn
-  
-  https://sites.google.com/site/qianghuang2017/
-  
+where `3823` is the `cardinality` of OptDigits.data and ``64`` is ``dimensionality`` of OptDigits.data.
